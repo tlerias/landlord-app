@@ -21,7 +21,7 @@ type (
 		NotFoundHandler(w http.ResponseWriter, resp *http.Request)
 		// UserNotFoundHandler(w http.ResponseWriter, resp *http.Request)
 		// ChallengeNotFoundHandler(w http.ResponseWriter, resp *http.Request)
-		// RespondSuccess(w http.ResponseWriter, response Response)
+		RespondSuccess(w http.ResponseWriter, response Response)
 		// AbortInternalServerError(w http.ResponseWriter)
 		// RespondNoContent(w http.ResponseWriter)
 		// AbortBadRequestWithError(w http.ResponseWriter, err error)
@@ -75,4 +75,20 @@ func (r *HTTPResponder) NotFoundHandler(w http.ResponseWriter, resp *http.Reques
 			ErrorCode:  catalog.CodeRouteNotFound,
 			Message:    catalog.ErrorRouteNotFound,
 		})
+}
+
+// RespondSuccess returns a 200 and the response
+func (r *HTTPResponder) RespondSuccess(w http.ResponseWriter, response Response) {
+	r.JSON(w, http.StatusOK, response)
+}
+
+// abortBadRequest returns a 400 and the response
+func (r *HTTPResponder) abortBadRequest(w http.ResponseWriter) {
+	resp := ErrorResponse{
+		StatusCode: http.StatusBadRequest,
+		ErrorCode:  catalog.CodeBadRequest,
+		Message:    catalog.ErrorBadRequest,
+	}
+
+	r.JSON(w, http.StatusBadRequest, &resp)
 }

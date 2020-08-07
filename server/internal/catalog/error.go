@@ -9,4 +9,6 @@ const (
 	ErrorInitLogger = "cannot initialize the logger"
 	// ErrorMarshalJSONResponse is the error message when JSON cannot be marshaled for http response
 	ErrorMarshalJSONResponse = "json could not be marshaled: review status code"
+	// ErrorBadRequest is the error message for an internal server error
+	ErrorBadRequest = "bad request, unable to process"
 )
